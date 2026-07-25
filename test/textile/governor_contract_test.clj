@@ -5,8 +5,7 @@
             [textile.governor :as governor]
             [textile.registry :as registry]))
 
-(deftest spec-basis-hard-gate
-  "Spec-basis is a HARD gate: never allow proposals without official citations."
+(deftest ^{:doc "Spec-basis is a HARD gate: never allow proposals without official citations."} spec-basis-hard-gate
   (let [st (store/mem-store)
         proposal {:op :actuation/log-production-batch
                   :subject "batch-001"
@@ -19,8 +18,7 @@
       (is (seq (:hard-violations eval)) "Should have hard violations")
       (is (some #(= (:rule %) :no-spec-basis) (:hard-violations eval))))))
 
-(deftest plant-not-verified-blocks
-  "Operations with unverified owning plants are blocked."
+(deftest ^{:doc "Operations with unverified owning plants are blocked."} plant-not-verified-blocks
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-01" "Test Mill")
         ;; Do NOT verify the plant
@@ -35,8 +33,7 @@
       (is (seq (:hard-violations eval)) "Should have hard violations")
       (is (some #(= (:rule %) :plant-not-verified) (:hard-violations eval))))))
 
-(deftest batch-not-verified-blocks
-  "Operations on unverified batches are blocked."
+(deftest ^{:doc "Operations on unverified batches are blocked."} batch-not-verified-blocks
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-02" "Test Mill")
         st (store/verify-plant! st "mill-02")
@@ -51,9 +48,8 @@
       (is (seq (:hard-violations eval)) "Should have hard violations")
       (is (some #(= (:rule %) :batch-not-verified) (:hard-violations eval))))))
 
-(deftest process-control-block
-  "HARD BLOCK: Proposals mentioning spinning control, frame control, or process
-  parameters are immediately rejected. Those remain engineer exclusive authority."
+(deftest ^{:doc "HARD BLOCK: Proposals mentioning spinning control, frame control, or process
+  parameters are immediately rejected. Those remain engineer exclusive authority."} process-control-block
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-03" "Test Mill")
         st (store/verify-plant! st "mill-03")
@@ -71,9 +67,8 @@
       (is (some #(= (:rule %) :process-control-forbidden) (:hard-violations eval))
         "Should have process-control-forbidden violation"))))
 
-(deftest quality-defect-escalation
-  "Quality defect flags ALWAYS escalate to human.
-  Never silently log a quality issue."
+(deftest ^{:doc "Quality defect flags ALWAYS escalate to human.
+  Never silently log a quality issue."} quality-defect-escalation
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-04" "Test Mill")
         st (store/verify-plant! st "mill-04")
@@ -93,9 +88,8 @@
       (is (some #(= (:rule %) :quality-defect-escalation) (:hard-violations eval))
         "Should have quality-defect-escalation violation"))))
 
-(deftest actuation-requires-escalation
-  "Both batch logging and quality defect flagging require human sign-off,
-  even when all other checks are clean."
+(deftest ^{:doc "Both batch logging and quality defect flagging require human sign-off,
+  even when all other checks are clean."} actuation-requires-escalation
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-05" "Test Mill")
         st (store/verify-plant! st "mill-05")
@@ -108,8 +102,7 @@
       (is (some #(= (:rule %) :escalate) (:soft-violations eval))
         "Should escalate high-stakes actuation"))))
 
-(deftest maintenance-scheduling-allowed
-  "Maintenance scheduling is allowed for verified plants."
+(deftest ^{:doc "Maintenance scheduling is allowed for verified plants."} maintenance-scheduling-allowed
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-06" "Test Mill")
         st (store/verify-plant! st "mill-06")
@@ -122,8 +115,7 @@
       ;; No hard violations for verified plant
       (is (empty? (:hard-violations eval)) "Should have no hard violations for verified plant"))))
 
-(deftest shipment-coordination-requires-batch-verification
-  "Shipment coordination requires both plant and batch to be verified."
+(deftest ^{:doc "Shipment coordination requires both plant and batch to be verified."} shipment-coordination-requires-batch-verification
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-07" "Test Mill")
         st (store/verify-plant! st "mill-07")
@@ -140,8 +132,7 @@
       (is (some #(= (:rule %) :batch-not-verified) (:hard-violations eval))
         "Should block shipment with unverified batch"))))
 
-(deftest confidence-floor-triggers-soft-gate
-  "Low confidence (<0.6) triggers soft-gate escalation."
+(deftest ^{:doc "Low confidence (<0.6) triggers soft-gate escalation."} confidence-floor-triggers-soft-gate
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-08" "Test Mill")
         st (store/verify-plant! st "mill-08")
@@ -157,8 +148,7 @@
       (is (some #(= (:rule %) :escalate) (:soft-violations eval))
         "Should escalate on low confidence"))))
 
-(deftest clean-proposal-passes-all-gates
-  "A complete, well-formed high-stakes proposal with all verifications has soft escalation gate."
+(deftest ^{:doc "A complete, well-formed high-stakes proposal with all verifications has soft escalation gate."} clean-proposal-passes-all-gates
   (let [st (store/mem-store)
         st (store/register-plant! st "mill-09" "Test Mill")
         st (store/verify-plant! st "mill-09")
