@@ -2,8 +2,7 @@
   (:require [clojure.test :refer [deftest is]]
             [textile.facts :as facts]))
 
-(deftest regulations-defined
-  "Regulatory references are defined for textile industry."
+(deftest ^{:doc "Regulatory references are defined for textile industry."} regulations-defined
   (is (contains? facts/regulations :labor-standards-act))
   (is (contains? facts/regulations :textile-safety-regulations))
   (is (contains? facts/regulations :industrial-safety-act))
@@ -11,29 +10,25 @@
   (is (contains? facts/regulations :environmental-protection))
   (is (contains? facts/regulations :international-trade-regulations)))
 
-(deftest process-phases-defined
-  "ISIC 1311 process phases are documented."
+(deftest ^{:doc "ISIC 1311 process phases are documented."} process-phases-defined
   (is (contains? facts/process-phases :fiber-preparation))
   (is (contains? facts/process-phases :roving-production))
   (is (contains? facts/process-phases :spinning))
   (is (contains? facts/process-phases :quality-control)))
 
-(deftest equipment-categories-defined
-  "Equipment categories for textile mills are documented."
+(deftest ^{:doc "Equipment categories for textile mills are documented."} equipment-categories-defined
   (is (contains? facts/equipment-categories :fiber-prep))
   (is (contains? facts/equipment-categories :roving-prod))
   (is (contains? facts/equipment-categories :spinning))
   (is (contains? facts/equipment-categories :finishing)))
 
-(deftest safety-thresholds-defined
-  "Safety thresholds for textile operations are set."
+(deftest ^{:doc "Safety thresholds for textile operations are set."} safety-thresholds-defined
   (is (contains? facts/safety-thresholds :max-fiber-contamination-ppm))
   (is (contains? facts/safety-thresholds :max-noise-level-db))
   (is (contains? facts/safety-thresholds :required-maintenance-interval-days))
   (is (contains? facts/safety-thresholds :max-spindle-speed-rpm)))
 
-(deftest social-impact-factors-defined
-  "Social impact factors for ISIC 1311 are documented."
+(deftest ^{:doc "Social impact factors for ISIC 1311 are documented."} social-impact-factors-defined
   (is (contains? facts/social-impact :fair-labor))
   (is (contains? facts/social-impact :local-industry))
   (is (contains? facts/social-impact :circular-materials)))
