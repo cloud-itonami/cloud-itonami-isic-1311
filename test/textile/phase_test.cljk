@@ -1,5 +1,5 @@
 (ns textile.phase-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [textile.phase :as phase]))
 
 (deftest ^{:doc "New batch states initialize with intake phase."} batch-state-initialization
