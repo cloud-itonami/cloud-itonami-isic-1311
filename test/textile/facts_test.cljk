@@ -1,5 +1,5 @@
 (ns textile.facts-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [textile.facts :as facts]))
 
 (deftest ^{:doc "Regulatory references are defined for textile industry."} regulations-defined
